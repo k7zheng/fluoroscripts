@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html">
+  <title>Customized Input Select Menus - Demo</title>
+  <meta name="author" content="Jake Rocheleau">
+  <link rel="shortcut icon" href="http://designm.ag/favicon.ico">
+  <link rel="icon" href="http://designm.ag/favicon.ico">
+  <link rel="stylesheet" type="text/css" media="all" href="selectize.js-master/dist/style.css">
+  <link rel="stylesheet" type="text/css" media="all" href="selectize.js-master/dist/css/selectize.css">
+  <script type="text/javascript" src="selectize.js-master/dist/js/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="selectize.js-master/dist/js/selectize.min.js"></script>
+</head>
+
+<body>
+<form id="testform" method="post" action="#">
+    <div class="formrow">
+      <label for="name">Name:</label>
+      <input type="text" id="name" class="basictxt" placeholder="Your name...">
+    </div>
+    
+    <div class="formrow">
+      <label for="email">Email:</label>
+      <input type="text" id="email" class="basictxt" placeholder="Your email...">
+    </div>
+    
+    <div class="formrow">
+      <label for="subject">Subject:</label>
+      <select id="subject">
+        <option value="1">General Inquiry</option>
+        <option value="2">Advertising</option>
+        <option value="3">Press</option>
+        <option value="5">Account Problems</option>
+        <option value="4">Content Submission</option>
+      </select>
+    </div>
+    
+    <div class="formrow">
+      <label for="tags">Tags:</label>
+      <input type="text" id="tags" value="website,graphics,question">
+    </div>
+    
+    <div class="formrow">
+      <label for="message">Message:</label>
+      <textarea class="basictxtarea" id="message"></textarea>
+      <input type="submit" class="large button" value="Send Message">
+    </div>
+  </form>
+  </body>
+  

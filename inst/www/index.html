@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Fluorosence test</title>
+<!--added bootstrap and jQuery for formatting -->
+    <link href ='css/bootstrap.css' rel='stylesheet'>
+    <script type="text/javascript" src="jquery-3.1.1.js"></script>    
+<!-- added for dropdown/autocomplete boxes w select2 -->
+    <link href="select2-4.0.3/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="select2-4.0.3/dist/js/select2.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $(".js-example-basic-multiple").select2();
+    });
+    </script>
+<!-- d3 and importing test.csv-->
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script>
+      d3.csv("test.csv", function(data) {
+        data.forEach(function(d) {
+          d.population = +d.population;
+          d["land area"] = +d["land area"];
+        });
+        console.log(data[0]);
+      });
+    </script>
+<!-- ??idk seems nessesary-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- ocpu library -->
+<!--<script src="jquery-3.1.1.js"> </script> can't call this twice-->
+    <script src="opencpu-0.5.js"> </script>
+</head>
+
+<body>
+  <div class='container'>
+<!--top text-->
+    <div class='row'>
+      <div class='col-md-12'>
+        <h1>Fluorosence test</h1>
+        <p class='lead'>Input desired proteins, lasers, and channels</p>
+      </div>
+    </div>
+<!--proteins, lasers, and channels input -->
+    <div class='row well'>
+        <div class='col-md-4'>
+          Proteins : <select id="proteins" class="js-example-basic-multiple" multiple="multiple" style="width: 200px; height: 200px">
+          <option value="AcGRP1">AcGRP1</option>
+          <option value="CyOFP1">CyOFP1</option>
+          <option value="DsRed2">DsRed2</option>
+          <option value="EGFP">EGFP</option>
+          <option value="EYFP">EYFP</option>
+          <option value="LSS-mKate1">LSS-mKate1</option>
+          <option value="LSS-mKate2">LSS-mKate2</option>
+          <option value="LSSmOrange">LSSmOrange</option>
+          <option value="NirFP">NirFP</option>
+          <option value="TagGFP2">TagGFP2</option>
+          <option value="TagRFP-T">TagRFP-T</option>
+          <option value="TagRFP">TagRFP</option>
+          <option value="TurboGFP">TurboGFP</option>
+          <option value="cfSGFP2">cfSGFP2</option>
+          <option value="iFP1.4">iFP1.4</option>
+          <option value="iFP2.0">iFP2.0</option>
+          <option value="mAzamiGreen">mAzamiGreen</option>
+          <option value="mBeRFP">mBeRFP</option>
+          <option value="mCardinal">mCardinal</option>
+          <option value="mCerulean3">mCerulean3</option>
+          <option value="mCherry">mCherry</option>
+          <option value="mClover3">mClover3</option>
+          <option value="mEmerald">mEmerald</option>
+          <option value="mIFP">mIFP</option>
+          <option value="mKO">mKO</option>
+          <option value="mKO1">mKO1</option>
+          <option value="mKO2">mKO2</option>
+          <option value="mKOk">mKOk</option>
+          <option value="mKate2">mKate2</option>
+          <option value="mKeima">mKeima</option>
+          <option value="mMiCy">mMiCy</option>
+          <option value="mNeonGreen">mNeonGreen</option>
+          <option value="mNeptune2.5">mNeptune2.5</option>
+          <option value="mOrange">mOrange</option>
+          <option value="mRFP1">mRFP1</option>
+          <option value="mRuby">mRuby</option>
+          <option value="mRuby2">mRuby2</option>
+          <option value="mRuby3">mRuby3</option>
+          <option value="mStrawberry">mStrawberry</option>
+          <option value="mTFP1">mTFP1</option>
+          <option value="mTangerine">mTangerine</option>
+          <option value="mTurquoise2">mTurquoise2</option>
+          <option value="mUKG">mUKG</option>
+          <option value="monomeric Midoriishi-Cyan">monomeric Midoriishi-Cyan</option>
+          <option value="tdTomato">tdTomato</option>
+        </select><!--<input type="textbox", id="proteins", value='["EGFP","EYFP"]'></input>-->
+        </div>
+        <div class='col-md-4'>
+          Lasers : <input type="textbox" id="lasers", value='[488, 640]'></input>
+        </div>
+        <div class='col-md-4'>
+          Channels : <input type="textbox" id="channels", value='["580/30"]'></input>
+        </div> 
+    </div>
+<!--plot and reset buttons-->
+    <div class='row'>
+      <div class='col-md-12'>
+        <button type='button' class='btn btn-primary' id="plot">Plot</button>
+        <button type='button' class='btn' id="reset">Reset</button>
+      </div>
+    </div>
+
+<!-- d3 test -->
+<script>
+  var dataArray = {};
+  var width = 500;
+  var height = 500;
+
+  var widthscale = d3.scale.lienar()
+                  .domain([400,800])
+                  .range([0,1])
+
+<!-- plot, doesn't seem to be doing anything-->
+    <div class='row'>
+      <div class='col-md-12'>
+        <script type="text/javascript">
+        $(document).ready(function() {
+          $("#plot").click(function () {
+      	  var proteins = $('#proteins').val();
+      	  var lasers = $('#lasers').val();
+      	  var channels = $('#channels').val();
+            var req = $("#plotdiv").rplot("iplot_spectra", {
+              proteins: JSON.parse(proteins),
+       	    lasers: JSON.parse(lasers),
+      	    channels: JSON.parse(channels)
+            }).fail(function(){
+                 alert(req.responseText);
+        	  });
+          });
+          $("#reset").click(function () {
+      	  $('#proteins').val('["EGFP","EYFP"]')
+            $('#lasers').val('[488, 640]')
+            $('#channels').val('["580/30"]')
+      	});
+        });
+        </script>
+<!-- ?? this seems to be the plot-->
+        <div id="plotdiv"></div>
+<!-- moved this into body from head, it's styling for the plot -->
+    <style>
+      #plotdiv {
+        margin-left: 10px;
+        margin-top: 10px;
+        width: 900px;
+        height: 600px;
+        border: solid gray 1px;
+      }
+      </style>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
